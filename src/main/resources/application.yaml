@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: Gestion
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
