@@ -19,24 +19,32 @@ import java.util.List;
 public class CategoriaController {
 
     private final ICategoriaService categoriaService;
-    private final CategoriaMapper categoriaMapper;
 
     @GetMapping
     public ResponseEntity<List<CategoriaResponse>> listarTodas() {
-        List<CategoriaResponse> categoriaResponses = categoriaMapper.categoriaListToCategoriaResponseList(
-                        categoriaService.buscarTodas());
-
+        List<CategoriaResponse> categoriaResponses = categoriaService.buscarTodas();
         return new ResponseEntity<>(categoriaResponses, HttpStatus.OK);
     }
 
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoriaResponse> buscarCategoriaPorId(@PathVariable Long id) {
+        CategoriaResponse categoriaResponse = categoriaService.buscarCategoriaPorId(id);
+        return new ResponseEntity<>(categoriaResponse, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<CategoriaResponse> guardarCategoria(@Valid @RequestBody CategoriaRequest catRequest) {
-        Categoria categoriaMapeada = categoriaMapper.categoriaRequestToCategoria(catRequest);
-        Categoria categoriaGuardada = categoriaService.guardarCategoria(categoriaMapeada);
-        CategoriaResponse categoriaResponse = categoriaMapper.categoriaToCategoriaResponse(categoriaGuardada);
+        CategoriaResponse categoriaResponse = categoriaService.guardarCategoria(catRequest);
 
         return new ResponseEntity<>(categoriaResponse, HttpStatus.CREATED);
 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> borrarCategoriaPorId(@PathVariable Long id) {
+        categoriaService.borrarCategoriaPorId(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

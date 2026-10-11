@@ -1,4 +1,4 @@
-package com.thiago.gestion.mapper;
+package com.thiago.gestion.repository;
 
 import com.thiago.gestion.domain.Marca;
 import org.springframework.data.jpa.repository.JpaRepository;

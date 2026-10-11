@@ -28,10 +28,24 @@ public class ProductoController {
         return new ResponseEntity<>(productosResponses, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductoResponse> buscarPorId( @PathVariable Long id) {
+        ProductoResponse productoBuscado = productoService.buscarProductoPorId(id);
+
+        return new ResponseEntity<>(productoBuscado,HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<ProductoResponse> guardarProducto(@Valid @RequestBody ProductoRequest productoRequest) {
 
         ProductoResponse productoResponse = productoService.guardarProducto(productoRequest);
         return new ResponseEntity<>(productoResponse, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> borrarProducto(@PathVariable Long id) {
+        productoService.borrarProductoPorId(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
