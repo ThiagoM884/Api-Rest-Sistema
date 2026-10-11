@@ -1,6 +1,7 @@
 package com.thiago.gestion.exception;
 
 import jakarta.persistence.EntityExistsException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,28 +33,16 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleEntityExistException(DataIntegrityViolationException ex) {
         Map<String, Object> body = new HashMap<>();
 
-        body.put("status", HttpStatus.NOT_FOUND.value());
-        body.put("error", "Not Found");
-        body.put("message", ex.getMessage());
-
-
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-
-    }
-    @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity<Object> handleEntityExistException(EntityExistsException ex) {
-        Map<String, Object> body = new HashMap<>();
-
-        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("status", HttpStatus.CONFLICT.value());
         body.put("error", "Errores de validación");
-        body.put("message", ex.getMessage());
+        body.put("message", ex.getMostSpecificCause().getMessage());
 
 
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
 
     }
 }

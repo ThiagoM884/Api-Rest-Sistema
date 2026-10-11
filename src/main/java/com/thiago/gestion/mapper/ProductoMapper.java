@@ -4,8 +4,7 @@ package com.thiago.gestion.mapper;
 import com.thiago.gestion.domain.Producto;
 import com.thiago.gestion.dto.ProductoRequest;
 import com.thiago.gestion.dto.ProductoResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -26,4 +25,9 @@ public interface ProductoMapper {
     @Mapping(target = "idProveedor", source = "proveedor.id")
     @Mapping(target = "idMarca", source = "marca.id")
     ProductoResponse productoToProductoResponse(Producto producto);
+
+
+    // Mapper de reemplazo parcial, porque ignoramos las propiedades Nulas.
+    // @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void actualizarProductoDesdeDto(ProductoRequest productoRequest, @MappingTarget Producto producto);
 }

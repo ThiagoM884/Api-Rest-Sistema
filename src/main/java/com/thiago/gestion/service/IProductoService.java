@@ -11,4 +11,5 @@ public interface IProductoService {
     ProductoResponse buscarProductoPorId(Long id);
     void borrarProductoPorId(Long id);
     ProductoResponse guardarProducto(ProductoRequest productoRequest);
+    ProductoResponse actualizarProducto(Long id, ProductoRequest productoRequest);
 }

@@ -28,21 +28,11 @@ public class CategoriaServiceImpl implements ICategoriaService{
 
     @Override
     public CategoriaResponse guardarCategoria(CategoriaRequest categoriaRequest) {
-
-        Categoria categoriaEncontrada = categoriaRepository
-                .findByNombre(categoriaRequest.getNombre()).orElse(null);
-        if(categoriaEncontrada == null) {
-            Categoria categoriaMapeada = categoriaMapper.categoriaRequestToCategoria(categoriaRequest);
-            Categoria categoriaGuardada = categoriaRepository.save(categoriaMapeada);
-            CategoriaResponse categoriaResponse = categoriaMapper.categoriaToCategoriaResponse(categoriaGuardada);
-            return categoriaResponse;
-        } else {
-            throw new EntityExistsException("Ya se encuentra la categoria con nombre: " + categoriaRequest.getNombre());
-        }
-
-
-
-
+        Categoria categoriaMapeada = categoriaMapper.categoriaRequestToCategoria(categoriaRequest);
+        Categoria categoriaGuardada = categoriaRepository.save(categoriaMapeada);
+        CategoriaResponse categoriaResponse = categoriaMapper.categoriaToCategoriaResponse(categoriaGuardada);
+        
+        return categoriaResponse;
 
     }
 

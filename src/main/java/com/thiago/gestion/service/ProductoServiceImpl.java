@@ -56,28 +56,67 @@ public class ProductoServiceImpl implements IProductoService{
     }
 
     @Override
+    public ProductoResponse actualizarProducto(Long id, ProductoRequest productoRequest) {
+        Producto producto =  productoRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("No fue encontrado el producto con id: " + id));
+
+        Categoria categoria = categoriaRepository
+                .findById(productoRequest.getIdCategoria()).orElseThrow(
+                        () -> new ResourceNotFoundException("No se encontró la categoria con id: " + productoRequest.getIdCategoria())
+                );
+
+        if(productoRequest.getIdProveedor() != null) {
+            Proveedor proveedor = proveedorRepository
+                    .findById(productoRequest.getIdProveedor()).orElseThrow(
+                            () -> new ResourceNotFoundException("No se encontró el proveedor con id: "+ productoRequest.getIdProveedor())
+                    );
+            producto.setProveedor(proveedor);
+        }
+
+
+        if(productoRequest.getIdMarca() != null) {
+            Marca marca = marcaRepository
+                    .findById(productoRequest.getIdMarca()).orElseThrow(
+                            () -> new ResourceNotFoundException("No se encontró la marca con id: "+ productoRequest.getIdMarca())
+                    );
+            producto.setMarca(marca);
+        }
+
+
+
+        productoMapper.actualizarProductoDesdeDto(productoRequest, producto);
+        Producto productoActualizado = productoRepository.save(producto);
+        ProductoResponse productoResponse = productoMapper.productoToProductoResponse(productoActualizado);
+        return productoResponse;
+    }
+
+    @Override
     @Transactional
     public ProductoResponse guardarProducto(ProductoRequest productoRequest) {
+
+
         Categoria categoria = categoriaRepository
-                .findById(productoRequest.getId_categoria()).orElseThrow(
-                        () -> new ResourceNotFoundException("No se encontró la categoria con id: " + productoRequest.getId_categoria())
+                .findById(productoRequest.getIdCategoria()).orElseThrow(
+                        () -> new ResourceNotFoundException("No se encontró la categoria con id: " + productoRequest.getIdCategoria())
                 );
 
         Producto producto = productoMapper.productoRequestToProducto(productoRequest);
         producto.setCategoria(categoria);
 
-        if(productoRequest.getId_proveedor() != null) {
+        if(productoRequest.getIdProveedor() != null) {
             Proveedor proveedor = proveedorRepository
-                    .findById(productoRequest.getId_proveedor()).orElseThrow(
-                            () -> new ResourceNotFoundException("No se encontró el proveedor con id: "+ productoRequest.getId_proveedor())
+                    .findById(productoRequest.getIdProveedor()).orElseThrow(
+                            () -> new ResourceNotFoundException("No se encontró el proveedor con id: "+ productoRequest.getIdProveedor())
                     );
             producto.setProveedor(proveedor);
         }
 
-        if(productoRequest.getId_marca() != null) {
+
+
+        if(productoRequest.getIdMarca() != null) {
             Marca marca = marcaRepository
-                    .findById(productoRequest.getId_marca()).orElseThrow(
-                            () -> new ResourceNotFoundException("No se encontró la marca con id: "+ productoRequest.getId_marca())
+                    .findById(productoRequest.getIdMarca()).orElseThrow(
+                            () -> new ResourceNotFoundException("No se encontró la marca con id: "+ productoRequest.getIdMarca())
                     );
             producto.setMarca(marca);
         }
