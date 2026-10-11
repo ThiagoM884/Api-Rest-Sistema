@@ -8,7 +8,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name="proveedores")
+@Table(name="proveedores",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_nombre_proveedor", columnNames = "nombre"),
+                @UniqueConstraint(name = "uk_email_proveedor", columnNames = "email")
+        })
 
 @Data
 @NoArgsConstructor
@@ -22,8 +26,14 @@ public class Proveedor {
     @Column(name = "nombre", nullable = false, unique = true, length = 50)
     private String nombre;
 
-    @Column(name = "numero_telefono", nullable = false, length = 50)
+    @Column(name = "telefono", nullable = false, length = 50)
     private String telefono;
+
+    @Column(name="email", unique = true, length = 50)
+    private String email;
+
+    @Column(name="direccion", length = 255)
+    private String direccion;
 
 
     @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
