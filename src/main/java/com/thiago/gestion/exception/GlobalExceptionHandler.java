@@ -33,6 +33,19 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        Map<String, Object> body = new HashMap<>();
+
+        body.put("status", HttpStatus.NOT_FOUND.value());
+        body.put("error", "Errores de validación");
+        body.put("message", ex.getMessage());
+
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Object> handleEntityExistException(DataIntegrityViolationException ex) {
         Map<String, Object> body = new HashMap<>();

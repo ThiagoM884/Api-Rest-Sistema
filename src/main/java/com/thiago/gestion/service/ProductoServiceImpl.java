@@ -1,17 +1,11 @@
 package com.thiago.gestion.service;
 
-import com.thiago.gestion.domain.Categoria;
-import com.thiago.gestion.domain.Marca;
-import com.thiago.gestion.domain.Producto;
-import com.thiago.gestion.domain.Proveedor;
+import com.thiago.gestion.domain.*;
 import com.thiago.gestion.dto.ProductoRequest;
 import com.thiago.gestion.dto.ProductoResponse;
 import com.thiago.gestion.exception.ResourceNotFoundException;
-import com.thiago.gestion.repository.MarcaRepository;
+import com.thiago.gestion.repository.*;
 import com.thiago.gestion.mapper.ProductoMapper;
-import com.thiago.gestion.repository.ProveedorRepository;
-import com.thiago.gestion.repository.CategoriaRepository;
-import com.thiago.gestion.repository.ProductoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductoServiceImpl implements IProductoService{
     private final ProductoRepository productoRepository;
-    private final CategoriaRepository categoriaRepository;
+    private final SubcategoriaRepository subcategoriaRepository;
     private final ProveedorRepository proveedorRepository;
     private final MarcaRepository marcaRepository;
 
@@ -60,9 +54,9 @@ public class ProductoServiceImpl implements IProductoService{
         Producto producto =  productoRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("No fue encontrado el producto con id: " + id));
 
-        Categoria categoria = categoriaRepository
-                .findById(productoRequest.getIdCategoria()).orElseThrow(
-                        () -> new ResourceNotFoundException("No se encontró la categoria con id: " + productoRequest.getIdCategoria())
+        Subcategoria subcategoria = subcategoriaRepository
+                .findById(productoRequest.getIdSubcategoria()).orElseThrow(
+                        () -> new ResourceNotFoundException("No se encontró la subcategoría con id: " + productoRequest.getIdSubcategoria())
                 );
 
         if(productoRequest.getIdProveedor() != null) {
@@ -95,13 +89,13 @@ public class ProductoServiceImpl implements IProductoService{
     public ProductoResponse guardarProducto(ProductoRequest productoRequest) {
 
 
-        Categoria categoria = categoriaRepository
-                .findById(productoRequest.getIdCategoria()).orElseThrow(
-                        () -> new ResourceNotFoundException("No se encontró la categoria con id: " + productoRequest.getIdCategoria())
+        Subcategoria subcategoria = subcategoriaRepository
+                .findById(productoRequest.getIdSubcategoria()).orElseThrow(
+                        () -> new ResourceNotFoundException("No se encontró la subcategoría con id: " + productoRequest.getIdSubcategoria())
                 );
 
         Producto producto = productoMapper.productoRequestToProducto(productoRequest);
-        producto.setCategoria(categoria);
+        producto.setSubcategoria(subcategoria);
 
         if(productoRequest.getIdProveedor() != null) {
             Proveedor proveedor = proveedorRepository

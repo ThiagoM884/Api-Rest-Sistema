@@ -15,7 +15,7 @@ public class ProductoResponse {
 
 
 
-    private Long idCategoria;
+    private Long idSubcategoria;
     private Long idProveedor;
     private Long idMarca;
 

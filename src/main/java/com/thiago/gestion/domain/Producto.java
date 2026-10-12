@@ -36,8 +36,8 @@ public class Producto {
     private Integer stock;
 
     @ManyToOne
-    @JoinColumn(name = "id_categoria")
-    private Categoria categoria;
+    @JoinColumn(name = "id_subcategoria")
+    private Subcategoria subcategoria;
 
     @ManyToOne
     @JoinColumn(name="id_proveedor")

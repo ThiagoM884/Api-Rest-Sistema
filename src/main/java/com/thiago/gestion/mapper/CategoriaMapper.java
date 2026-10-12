@@ -14,10 +14,6 @@ public interface CategoriaMapper {
 
     List<CategoriaResponse> categoriaListToCategoriaResponseList(List<Categoria> categoriaList);
 
-    @Mapping(target="productos", ignore = true)
-    @Mapping(target = "id", ignore = true)
     Categoria categoriaRequestToCategoria(CategoriaRequest categoriaRequest);
-
-
     CategoriaResponse categoriaToCategoriaResponse(Categoria categoria);
 }

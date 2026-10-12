@@ -27,5 +27,5 @@ public class Categoria {
     private String descripcion;
 
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
-    private List<Producto> productos;
+    private List<Subcategoria> subcategorias;
 }

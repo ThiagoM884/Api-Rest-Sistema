@@ -11,17 +11,17 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ProductoMapper {
 
-    @Mapping(target = "idCategoria", source = "categoria.id")
+    @Mapping(target = "idSubcategoria", source = "subcategoria.id")
     @Mapping(target = "idProveedor", source = "proveedor.id")
     @Mapping(target = "idMarca", source = "marca.id")
     List<ProductoResponse> productoListToProductoResponseList(List<Producto> productos);
 
-    @Mapping(target="categoria", ignore = true)
+    @Mapping(target="subcategoria", ignore = true)
     @Mapping(target="marca", ignore = true)
     @Mapping(target = "proveedor", ignore = true)
     Producto productoRequestToProducto(ProductoRequest productoRequest);
 
-    @Mapping(target = "idCategoria", source = "categoria.id")
+    @Mapping(target = "idSubcategoria", source = "subcategoria.id")
     @Mapping(target = "idProveedor", source = "proveedor.id")
     @Mapping(target = "idMarca", source = "marca.id")
     ProductoResponse productoToProductoResponse(Producto producto);

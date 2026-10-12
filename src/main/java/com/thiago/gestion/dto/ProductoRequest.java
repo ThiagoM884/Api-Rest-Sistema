@@ -30,8 +30,8 @@ public class ProductoRequest {
     @NotNull(message = "El stock del producto no puede estar vacío. ")
     private Integer stock;
 
-    @NotNull(message = "La categoria no puede estar vacía.")
-    private Long idCategoria;
+    @NotNull(message = "La subcategoría no puede estar vacía.")
+    private Long idSubcategoria;
 
     private Long idProveedor;
     private Long idMarca;
