@@ -8,6 +8,7 @@ import com.thiago.gestion.mapper.ProveedorMapper;
 import com.thiago.gestion.repository.ProveedorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class ProveedorServiceImpl implements IProveedorService {
     }
 
     @Override
+    @Transactional
     public void borrarProveedorPorId(Long id) {
         Proveedor proveedor = proveedorRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("No se encontro el proveedor con id: " + id)
@@ -45,6 +47,7 @@ public class ProveedorServiceImpl implements IProveedorService {
     }
 
     @Override
+    @Transactional
     public ProveedorResponse guardarProveedor(ProveedorRequest proveedorRequest) {
         Proveedor proveedorMapeado = proveedorMapper.proveedorRequestToProveedor(proveedorRequest);
         Proveedor proveedorGuardado = proveedorRepository.save(proveedorMapeado);
@@ -54,6 +57,7 @@ public class ProveedorServiceImpl implements IProveedorService {
     }
 
     @Override
+    @Transactional
     public ProveedorResponse actualizarProducto(Long id, ProveedorRequest proveedorRequest) {
         Proveedor proveedor = proveedorRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("No se encontro el proveedor con id: " + id)

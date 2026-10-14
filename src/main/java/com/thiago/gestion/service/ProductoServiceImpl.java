@@ -41,6 +41,7 @@ public class ProductoServiceImpl implements IProductoService{
     }
 
     @Override
+    @Transactional
     public void borrarProductoPorId(Long id) {
         Producto productoBuscado = productoRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("No fue encontrado el producto con id: " + id)
@@ -50,6 +51,7 @@ public class ProductoServiceImpl implements IProductoService{
     }
 
     @Override
+    @Transactional
     public ProductoResponse actualizarProducto(Long id, ProductoRequest productoRequest) {
         Producto producto =  productoRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("No fue encontrado el producto con id: " + id));

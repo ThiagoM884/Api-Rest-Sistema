@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "marcas")
+@Table(name = "marcas", uniqueConstraints = @UniqueConstraint(name = "uk_nombre_marca", columnNames = "nombre"))
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class Marca {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
     @OneToMany(mappedBy = "marca")

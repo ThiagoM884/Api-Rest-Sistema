@@ -10,6 +10,7 @@ import com.thiago.gestion.repository.CategoriaRepository;
 import com.thiago.gestion.repository.SubcategoriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class SubcategoriaServiceImpl implements ISubcategoriaService {
     }
 
     @Override
+    @Transactional
     public SubcategoriaResponse guardarSubcategoria(SubcategoriaRequest subcategoriaRequest) {
         Categoria categoria = categoriaRepository.findById(subcategoriaRequest.getIdCategoria()).orElseThrow(
                 () -> new ResourceNotFoundException("No se encontró la categoría con id: " + subcategoriaRequest.getIdCategoria())
@@ -52,6 +54,7 @@ public class SubcategoriaServiceImpl implements ISubcategoriaService {
     }
 
     @Override
+    @Transactional
     public void borrarSubcategoriaPorId(Long id) {
         Subcategoria subcategoria = subcategoriaRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("No se encontró la subcategoria con id: "+ id)

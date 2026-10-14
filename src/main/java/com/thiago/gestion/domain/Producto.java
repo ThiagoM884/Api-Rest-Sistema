@@ -20,7 +20,7 @@ public class Producto {
     private Long id;
 
 
-    @Column(name="nombre", nullable = false, unique = true, length = 50)
+    @Column(name="nombre", nullable = false, length = 50)
     private String nombre;
 
     @Column(name="codigo_barras", length = 50)
@@ -36,16 +36,19 @@ public class Producto {
     private Integer stock;
 
     @ManyToOne
-    @JoinColumn(name = "id_subcategoria")
+    @JoinColumn(name = "id_subcategoria",
+            foreignKey = @ForeignKey(name = "fk_producto_subcategoria"))
     private Subcategoria subcategoria;
 
     @ManyToOne
-    @JoinColumn(name="id_proveedor")
+    @JoinColumn(name="id_proveedor",
+            foreignKey = @ForeignKey(name = "fk_producto_proveedor"))
     private Proveedor proveedor;
 
 
     @ManyToOne
-    @JoinColumn(name="id_marca")
+    @JoinColumn(name="id_marca",
+            foreignKey = @ForeignKey(name="fk_producto_marca"))
     private Marca marca;
 
 }

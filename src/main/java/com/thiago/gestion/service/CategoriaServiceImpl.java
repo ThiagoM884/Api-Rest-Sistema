@@ -9,6 +9,7 @@ import com.thiago.gestion.repository.CategoriaRepository;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class CategoriaServiceImpl implements ICategoriaService{
     }
 
     @Override
+    @Transactional
     public CategoriaResponse guardarCategoria(CategoriaRequest categoriaRequest) {
         Categoria categoriaMapeada = categoriaMapper.categoriaRequestToCategoria(categoriaRequest);
         Categoria categoriaGuardada = categoriaRepository.save(categoriaMapeada);
@@ -48,6 +50,7 @@ public class CategoriaServiceImpl implements ICategoriaService{
     }
 
     @Override
+    @Transactional
     public void borrarCategoriaPorId(Long id) {
         Categoria categoriaBuscada = categoriaRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("No se encontró la categoria con id: "+ id)
